@@ -48,7 +48,7 @@ A new virtualenv will be created for the application in "#{path}/shared/env"; pi
 - legacy\_database\_settings: if true, the default settings template will generate legacy database config variables. Defaults to false
 - debug: used by the default settings template to control debugging. Defaults to false
 - collectstatic: controls the behavior of the `staticfiles` app. If true, if will invoke manage.py with `collectstatic --noinput`; you can also pass a String with an explicit command (see Usage below). Defaults to false
-
+- migrate_south: determines whether or not South migrations will be run on syncdb
 # Database block parameters
 
 The database block can accept any method, which will result in an entry being created in the `@database` Hash which is passed to the context template. See Usage below for more information.
@@ -97,7 +97,7 @@ A sample application that needs a database connection:
       migrate true
       packages ["libpq-dev", "git-core", "mercurial"]
 
-      django do 
+      django do
         packages ["redis"]
         requirements "requirements/mkii.txt"
         settings_template "settings.py.erb"
