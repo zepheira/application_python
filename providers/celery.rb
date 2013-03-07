@@ -53,7 +53,7 @@ action :before_deploy do
 
   template ::File.join(new_resource.application.path, "shared", new_resource.config_base) do
     source new_resource.template || "celeryconfig.py.erb"
-    cookbook new_resource.template ? new_resource.cookbook_name : "application_python"
+    cookbook new_resource.template ? new_resource.cookbook_name.to_s : "application_python"
     owner new_resource.owner
     group new_resource.group
     mode "644"
@@ -62,7 +62,7 @@ action :before_deploy do
 
   cmds = {}
   cmds[:celeryd] = "celeryd #{new_resource.celerycam ? "-E" : ""}" if new_resource.celeryd
-  cmds[:celerybeat] = "celerybeat" if new_resource.celerycam
+  cmds[:celerybeat] = "celerybeat" if new_resource.celerybeat
   if new_resource.celerycam
     if new_resource.django
       cmd = "celerycam"
@@ -80,9 +80,14 @@ action :before_deploy do
         django_resource = new_resource.application.sub_resources.select{|res| res.type == :django}.first
         raise "No Django deployment resource found" unless django_resource
         command "#{::File.join(django_resource.virtualenv, "bin", "python")} manage.py #{cmd}"
+        environment new_resource.environment
       else
         command cmd
-        environment 'CELERY_CONFIG_MODULE' => new_resource.config
+        if new_resource.environment
+          environment new_resource.environment.merge({'CELERY_CONFIG_MODULE' => new_resource.config})
+        else
+          environment 'CELERY_CONFIG_MODULE' => new_resource.config
+        end
       end
       directory ::File.join(new_resource.path, "current")
       autostart false
