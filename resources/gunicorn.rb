@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include Chef::Resource::ApplicationBase
+include ApplicationCookbook::ResourceBase
 
 attribute :app_module, :kind_of => [String, Symbol, NilClass], :default => nil
 # Actually defaults to "settings.py.erb", but nil means it wasn't set by the user
@@ -26,7 +26,7 @@ attribute :settings_template, :kind_of => [String, NilClass], :default => nil
 attribute :host, :kind_of => String, :default => '0.0.0.0'
 attribute :port, :kind_of => Integer, :default => 8080
 attribute :backlog, :kind_of => Integer, :default => 2048
-attribute :workers, :kind_of => Integer, :default => [node['cpu']['total'].to_i * 4, 8].min
+attribute :workers, :kind_of => Integer, :default => (node['cpu'] && node['cpu']['total']) && [node['cpu']['total'].to_i * 4, 8].min || 8
 attribute :worker_class, :kind_of => [String, Symbol], :default => :sync
 attribute :worker_connections, :kind_of => Integer, :default => 1000
 attribute :max_requests, :kind_of => Integer, :default => 0

@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include Chef::Resource::ApplicationBase
+include ApplicationCookbook::ResourceBase
 
 attribute :config, :kind_of => [String, NilClass], :default => nil
 attribute :template, :kind_of => [String, NilClass], :default => nil
@@ -27,7 +27,9 @@ attribute :celeryd, :kind_of => [TrueClass, FalseClass], :default => true
 attribute :celerybeat, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :celerycam, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :camera_class, :kind_of => [String, NilClass], :default => nil
+attribute :enable_events, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :environment, :kind_of => [Hash], :default => {}
+attribute :queues, :kind_of => [Array,NilClass], :default => nil
 
 def config_base
   config.split(/[\\\/]/).last
