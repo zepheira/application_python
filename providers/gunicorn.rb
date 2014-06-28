@@ -20,7 +20,7 @@
 
 require 'tmpdir'
 
-include Chef::Mixin::LanguageIncludeRecipe
+include Chef::DSL::IncludeRecipe
 
 action :before_compile do
 
@@ -50,8 +50,9 @@ action :before_compile do
   end
 
   if !new_resource.restart_command
+    r = new_resource
     new_resource.restart_command do
-      run_context.resource_collection.find(:supervisor_service => new_resource.application.name).run_action(:restart)
+      run_context.resource_collection.find(:supervisor_service => r.application.name).run_action(:restart)
     end
   end
 
@@ -67,7 +68,12 @@ action :before_deploy do
     action :create
     template new_resource.settings_template || 'gunicorn.py.erb'
     cookbook new_resource.settings_template ? new_resource.cookbook_name.to_s : 'gunicorn'
-    listen "#{new_resource.host}:#{new_resource.port}"
+    if new_resource.socket_path
+      listen_uri = "unix:#{new_resource.socket_path}"
+    else
+      listen_uri = "#{new_resource.host}:#{new_resource.port}"
+    end
+    listen listen_uri
     backlog new_resource.backlog
     worker_processes new_resource.workers
     worker_class new_resource.worker_class.to_s

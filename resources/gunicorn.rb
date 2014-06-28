@@ -23,6 +23,7 @@ include ApplicationCookbook::ResourceBase
 attribute :app_module, :kind_of => [String, Symbol, NilClass], :default => nil
 # Actually defaults to "settings.py.erb", but nil means it wasn't set by the user
 attribute :settings_template, :kind_of => [String, NilClass], :default => nil
+attribute :socket_path, :kind_of => [String, NilClass], :default => nil
 attribute :host, :kind_of => String, :default => '0.0.0.0'
 attribute :port, :kind_of => Integer, :default => 8080
 attribute :backlog, :kind_of => Integer, :default => 2048
@@ -45,5 +46,6 @@ attribute :virtualenv, :kind_of => String, :default => nil
 attribute :packages, :kind_of => [Array, Hash], :default => []
 attribute :requirements, :kind_of => [NilClass, String, FalseClass], :default => nil
 attribute :environment, :kind_of => [Hash], :default => {}
+attribute :autostart, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :directory, :kind_of => [NilClass, String], :default => nil
 attribute :autostart, :kind_of => [TrueClass, FalseClass], :default=> true

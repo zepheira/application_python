@@ -20,7 +20,7 @@
 
 require 'tmpdir'
 
-include Chef::Mixin::LanguageIncludeRecipe
+include Chef::DSL::IncludeRecipe
 
 action :before_compile do
 
@@ -141,7 +141,7 @@ def created_settings_file
     group new_resource.group
     mode "644"
     variables new_resource.settings.clone
-    variables.update :debug => new_resource.debug, :database => {
+    variables.update :django => new_resource, :debug => new_resource.debug, :database => {
       :host => host,
       :settings => new_resource.database,
       :legacy => new_resource.legacy_database_settings
