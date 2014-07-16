@@ -26,29 +26,6 @@ action :before_compile do
 
   include_recipe "supervisor"
 
-  install_packages
-
-  django_resource = new_resource.application.sub_resources.select{|res| res.type == :django}.first
-
-  new_venv = nil
-  if django_resource && !::File.exists?(django_resource.virtualenv)
-    new_venv = django_resource.virtualenv
-  elsif !django_resource && !::File.exists?(new_resource.virtualenv)
-    new_venv = new_resource.virtualenv
-  end
-  if !new_venv.nil?
-    python_virtualenv new_venv do
-      path new_venv
-      owner new_resource.owner
-      group new_resource.group
-      action :create
-    end
-  end
-
-  gunicorn_install "gunicorn-#{new_resource.application.name}" do
-    virtualenv django_resource ? django_resource.virtualenv : new_resource.virtualenv
-  end
-
   if !new_resource.restart_command
     r = new_resource
     new_resource.restart_command do
@@ -63,6 +40,14 @@ end
 action :before_deploy do
 
   new_resource = @new_resource
+
+  install_packages
+
+  django_resource = new_resource.application.sub_resources.select{|res| res.type == :django}.first
+
+  gunicorn_install "gunicorn-#{new_resource.application.name}" do
+    virtualenv django_resource ? django_resource.virtualenv : new_resource.virtualenv
+  end
 
   gunicorn_config "#{new_resource.application.path}/shared/gunicorn_config.py" do
     action :create
