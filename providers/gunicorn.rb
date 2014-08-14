@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: application_python
+# Cookbook Name:: z_application_python
 # Provider:: gunicorn
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
@@ -29,7 +29,7 @@ action :before_compile do
   if !new_resource.restart_command
     r = new_resource
     new_resource.restart_command do
-      run_context.resource_collection.find(:supervisor_service => r.application.name).run_action(:restart)
+      run_context.resource_collection.find(:z_supervisor_service => r.application.name).run_action(:restart)
     end
   end
 
@@ -77,7 +77,7 @@ action :before_deploy do
     #proc_name
   end
 
-  supervisor_service new_resource.application.name do
+  z_supervisor_service new_resource.application.name do
     action :enable
     if new_resource.environment
       environment new_resource.environment

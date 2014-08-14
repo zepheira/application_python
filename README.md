@@ -1,5 +1,5 @@
-application_python Cookbook
-===========================
+z_application_python Cookbook
+=============================
 This cookbook is designed to be able to describe and deploy Python web applications. Currently supported:
 
 - plain python web applications

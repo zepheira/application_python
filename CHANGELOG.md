@@ -1,7 +1,11 @@
-application_python Cookbok CHANGELOG
-====================================
-This file is used to list changes made in each version of the application_python cookbook.
+z_application_python Cookbok CHANGELOG
+======================================
+This file is used to list changes made in each version of the z_application_python cookbook.
 
+v4.0.0
+------
+
+- Fork renamed to z_application_python
 
 v3.0.0
 ------

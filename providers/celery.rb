@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: application_python
+# Cookbook Name:: z_application_python
 # Provider:: django
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
@@ -29,9 +29,9 @@ action :before_compile do
   if !new_resource.restart_command
     r = new_resource
     new_resource.restart_command do
-      run_context.resource_collection.find(:supervisor_service => "#{r.application.name}-celeryd").run_action(:restart) if r.celeryd
-      run_context.resource_collection.find(:supervisor_service => "#{r.application.name}-celerybeat").run_action(:restart) if r.celerybeat
-      run_context.resource_collection.find(:supervisor_service => "#{r.application.name}-celerycam").run_action(:restart) if r.celerycam
+      run_context.resource_collection.find(:z_supervisor_service => "#{r.application.name}-celeryd").run_action(:restart) if r.celeryd
+      run_context.resource_collection.find(:z_supervisor_service => "#{r.application.name}-celerybeat").run_action(:restart) if r.celerybeat
+      run_context.resource_collection.find(:z_supervisor_service => "#{r.application.name}-celerycam").run_action(:restart) if r.celerycam
     end
   end
 
@@ -54,7 +54,7 @@ action :before_deploy do
 
   template ::File.join(new_resource.application.path, "shared", new_resource.config_base) do
     source new_resource.template || "celeryconfig.py.erb"
-    cookbook new_resource.template ? new_resource.cookbook_name.to_s : "application_python"
+    cookbook new_resource.template ? new_resource.cookbook_name.to_s : "z_application_python"
     owner new_resource.owner
     group new_resource.group
     mode "644"
@@ -87,7 +87,7 @@ action :before_deploy do
   end
 
   cmds.each do |type, cmd|
-    supervisor_service "#{new_resource.application.name}-#{type}" do
+    z_supervisor_service "#{new_resource.application.name}-#{type}" do
       action :enable
       if new_resource.django
         django_resource = new_resource.application.sub_resources.select{|res| res.type == :django}.first

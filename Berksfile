@@ -2,4 +2,4 @@ source "https://api.berkshelf.com"
 
 metadata
 
-cookbook "supervisor", github: "zepheira/supervisor"
+cookbook "z_supervisor", github: "zepheira/supervisor"
