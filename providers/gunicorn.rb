@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: z_application_python
+# Cookbook Name:: application_z_python
 # Provider:: gunicorn
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>

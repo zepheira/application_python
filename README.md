@@ -1,4 +1,4 @@
-z_application_python Cookbook
+application_z_python Cookbook
 =============================
 This cookbook is designed to be able to describe and deploy Python web applications. Currently supported:
 

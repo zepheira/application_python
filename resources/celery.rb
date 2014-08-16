@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: z_application_python
+# Cookbook Name:: application_z_python
 # Resource:: celery
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>

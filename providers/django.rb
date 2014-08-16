@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: z_application_python
+# Cookbook Name:: application_z_python
 # Provider:: django
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
@@ -136,7 +136,7 @@ def created_settings_file
 
   template "#{new_resource.path}/shared/#{new_resource.local_settings_base}" do
     source new_resource.settings_template || "settings.py.erb"
-    cookbook new_resource.settings_template ? new_resource.cookbook_name.to_s : "z_application_python"
+    cookbook new_resource.settings_template ? new_resource.cookbook_name.to_s : "application_z_python"
     owner new_resource.owner
     group new_resource.group
     mode "644"

@@ -1,6 +1,6 @@
 #
 # Author:: Noah Kantrowitz <noah@opscode.com>
-# Cookbook Name:: z_application_python
+# Cookbook Name:: application_z_python
 # Provider:: django
 #
 # Copyright:: 2011, Opscode, Inc <legal@opscode.com>
@@ -54,7 +54,7 @@ action :before_deploy do
 
   template ::File.join(new_resource.application.path, "shared", new_resource.config_base) do
     source new_resource.template || "celeryconfig.py.erb"
-    cookbook new_resource.template ? new_resource.cookbook_name.to_s : "z_application_python"
+    cookbook new_resource.template ? new_resource.cookbook_name.to_s : "application_z_python"
     owner new_resource.owner
     group new_resource.group
     mode "644"
