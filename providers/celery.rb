@@ -23,6 +23,7 @@ include Chef::DSL::IncludeRecipe
 action :before_compile do
 
   include_recipe "z_supervisor"
+  include_recipe "supervisor-wrapper::default"
 
   raise "You must specify an application module to load" unless new_resource.config
 

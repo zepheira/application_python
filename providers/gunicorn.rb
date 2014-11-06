@@ -25,6 +25,7 @@ include Chef::DSL::IncludeRecipe
 action :before_compile do
 
   include_recipe "z_supervisor"
+  include_recipe "supervisor-wrapper::default"
 
   if !new_resource.restart_command
     r = new_resource
