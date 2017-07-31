@@ -25,7 +25,6 @@ include Chef::DSL::IncludeRecipe
 action :before_compile do
 
   include_recipe "z_supervisor"
-  include_recipe "supervisor-wrapper::default"
 
   if !new_resource.restart_command
     r = new_resource
@@ -88,7 +87,7 @@ action :before_deploy do
       raise "No Django deployment resource found" unless django_resource
       base_command = "#{::File.join(django_resource.virtualenv, "bin", "python")} manage.py run_gunicorn"
     else
-      gunicorn_command = new_resource.virtualenv.nil? ? "gunicorn" : "#{::File.join(new_resource.virtualenv, "bin", "gunicorn")}"
+      gunicorn_command = new_resource.virtualenv.nil? ? "gunicorn" : ::File.join(new_resource.virtualenv, "bin", "gunicorn")
       base_command = "#{gunicorn_command} #{new_resource.app_module}"
     end
     command "#{base_command} -c #{new_resource.application.path}/shared/gunicorn_config.py"
